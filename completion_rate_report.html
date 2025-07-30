@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Scope Change Report</title>
+	<link rel="stylesheet" type="text/css" href="../../../../../ui/external-actions/style/alm-octane-style.css" />
+	<link rel="stylesheet" type="text/css" href="completion_rate_report.css" />
+	<script src="chart.umd.min.js" type="module"></script>
+	<script src="chartjs-plugin-datalabels.min.js" type="module"></script>
+	<script src="completion_rate_report.js" type="module"></script>
+	<script src="data_fetcher.js" type="module"></script>
+	<script src="chart_designer.js" type="module"></script>
+	<script src="multiselect_dropdown.js" type="module"></script>
+	<script src="scope_type_selector.js" type="module"></script>
+	<script src="date_utils.js" type="module"></script>
+</head>
+<body>
+<div class="layout-container">
+	<!-- Left Sidebar -->
+	<div class="sidebar">
+		<button id="show-general-btn" class="sidebar-btn active" direct-to-att="general">General</button>
+		<button id="show-config-btn" class="sidebar-btn" direct-to-att="config">Data</button>
+		<button id="show-display-btn" class="sidebar-btn" direct-to-att="display">Display</button>
+		<button id="show-widget-btn" class="sidebar-btn" direct-to-att="widget">Preview</button>
+	</div>
+
+	<!-- Right Content Area -->
+	<div class="content">
+		<!-- general section -->
+		<div id="general" class="content-section">
+			<div class="controls">
+				<div class="config-line">
+					<label class="config-label" for="graph-name">Graph name</label>
+					<input type="text" id="graph-name" class="text-input input-container" value="Completion Rate Report" maxlength="150"/>
+				</div>
+				<div class="config-line">
+					<label class="config-label" for="graph-description">Description</label>
+					<textarea id="graph-description" class="textarea-field" placeholder="Add Graph Description"></textarea>
+				</div>
+			</div>
+		</div>
+		<!-- Config Section -->
+		<div id="config" class="content-section" style="display: none;">
+			<div class="controls">
+				<div class="config-line">
+					<label class="config-label" for="type-select">Type</label>
+					<select id="type-select" class="select-dropdown">
+						<option value="feature">Feature</option>
+						<option value="backlog_items">Backlog Items</option>
+						<option value="story">Story</option>
+						<option value="defect">Defect</option>
+						<option value="quality_story">Quality Story</option>
+					</select>
+				</div>
+				<div class="sub-header-config-line">
+					<label class="config-label sub-header">Filters</label>
+				</div>
+				<div id="multi-release-select"></div>
+				<div id="multi-team-select"></div>
+
+				<button id="create-report" class="generate-btn" style="display: none;">Generate Report</button>
+			</div>
+		</div>
+
+		<!-- Display Section -->
+		<div id="display" class="content-section" style="display: none;">
+			<div class="controls">
+				<div id="scope-type-selector"></div>
+				<div id="y-axis-selector"></div>
+			</div>
+		</div>
+
+		<!-- Widget Section -->
+		<div id="widget" class="content-section" style="display: none;">
+			<div id="trendData" class="absolute-stretch overflow--auto padding--15px"></div>
+
+			<div id="loading_icon" class="center-icon" style="display: none;">
+				<object type="image/svg+xml" data="loading_icon.svg"></object>
+			</div>
+
+			<div id="dialog-content" class="dialog-content">
+				<div id="chart-container">
+					<!-- Chart will be rendered here -->
+					<canvas id="scopeChart"></canvas>
+				</div>
+			</div>
+
+			<div id="error-dialog-content" class="error-dialog-content"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Simple modal -->
+<div id="infoModal" style="display:none; position:fixed; top:20%; left:30%; background:#fff; padding:20px; border:1px solid #ccc;">
+	<p id="modalContent"></p>
+	<button onclick="document.getElementById('infoModal').style.display='none'">Close</button>
+</div>
+
+</body>
+<!--
+<body>
+<div id="trendData" class="absolute-stretch overflow&#45;&#45;auto padding&#45;&#45;15px"></div>
+
+  <div class="controls">
+
+	    <label for="type-select">Type:</label>
+	    <select id="type-select" class="select-dropdown">
+	        <option value="feature">Feature</option>
+			<option value="backlog_items">Backlog Items</option>
+			<option value="story">Story</option>
+			<option value="defect">Defect</option>
+			<option value="quality_story">Quality Story</option>
+	    </select>
+
+	    &lt;!&ndash;<label for="start-date">Start Date:</label>
+	    <input type="date" id="start-date" />
+
+	    <label for="end-date">End Date:</label>
+	    <input type="date" id="end-date" />&ndash;&gt;
+
+	  <div id="multi-release-select"></div>
+
+	  <div id="scope-type-selector"></div>
+
+	  <div id="multi-team-select"></div>
+
+	  <button id="create-report" class="generate-btn">Generate Report</button>
+  </div>
+
+  <div id="loading_icon" class="center-icon" style="display: none;">
+  	  <object type="image/svg+xml" data="loading_icon.svg"></object>
+  </div>
+
+	<div id="dialog-content" class="dialog-content">
+	  <div id="chart-container">
+			&lt;!&ndash; Chart will be rendered here &ndash;&gt;
+			<canvas id="scopeChart"></canvas>
+	  </div>
+	</div>
+
+	<div id="error-dialog-content" class="error-dialog-content"></div>
+
+</body>
+-->
+</html>
