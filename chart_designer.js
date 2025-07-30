@@ -105,9 +105,23 @@ export function initScopeChart(plannedItems, actualContentItems, Labels, trendDr
                 },
                 title: {display: true, text: widgetName, color: '#323435'},
                 datalabels: {
-                    anchor: 'center',
-                    align: 'top',
-                    color: '#FFF',
+                    anchor: function(context) {
+                        const max = context.chart.scales.y.max;
+                        const value = context.dataset.data[context.dataIndex];
+                        return value.y < max * 0.05 ? 'end' : 'center';
+                    },
+                    align: function(context) {
+                        const max = context.chart.scales.y.max;
+                        const value = context.dataset.data[context.dataIndex];
+                        return value.y < max * 0.05 ? 'top' : 'center';
+                    },
+                    color: function(context) {
+                        const max = context.chart.scales.y.max;
+                        const value = context.dataset.data[context.dataIndex];
+                        return value.y < max * 0.05 ? '#000000' : '#FFFFFF';
+                    },
+                    clamp: true, // Prevents labels from being drawn outside the chart area
+                    clip: false, // Allows labels to overflow if needed
                     font: {
                         weight: 'bold'
                     },
